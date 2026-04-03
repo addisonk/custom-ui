@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "custom-ui",
+  "homepage": "https://github.com/addisonk/custom-ui",
+  "items": [
+    {
+      "name": "cell",
+      "type": "registry:ui",
+      "title": "Cell",
+      "description": "A composable list-cell component for building list items with start, content, and end slots.",
+      "dependencies": ["@radix-ui/react-slot"],
+      "registryDependencies": ["skeleton"],
+      "files": [
+        {
+          "path": "registry/custom-ui/cell.tsx",
+          "type": "registry:ui",
+          "target": "components/custom-ui/cell.tsx"
+        }
+      ]
+    }
+  ]
+}
