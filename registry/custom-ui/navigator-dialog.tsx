@@ -7,7 +7,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -37,10 +36,13 @@ export function useNavigator() {
 export interface NavigatorView {
   /** Unique id — referenced by `initialView` and `navigate()`. */
   id: string;
-  /** Heading shown in the dialog header — also the dialog's accessible name. */
+  /**
+   * Screen title — the short label shown in the dialog's header bar
+   * (between the back and close buttons) and the dialog's accessible name.
+   * This is the screen's identity, not view content: any in-view heading or
+   * description belongs inside `render()`.
+   */
   title: string;
-  /** Optional supporting text shown under the title. */
-  description?: string;
   render: () => React.ReactNode;
 }
 
@@ -113,6 +115,9 @@ export function NavigatorDialog({
       <DialogContent
         data-slot="navigator-dialog"
         showCloseButton={false}
+        // The screen title is the accessible name; views own their own
+        // body content, so there is no chrome-level description.
+        aria-describedby={undefined}
         className={cn(
           // Fixed height so the dialog never resizes between views —
           // the header stays pinned and the content scrolls instead.
@@ -153,11 +158,6 @@ export function NavigatorDialog({
                 </Button>
               </DialogClose>
             </div>
-            {activeView.description && (
-              <DialogDescription className="text-center">
-                {activeView.description}
-              </DialogDescription>
-            )}
           </DialogHeader>
 
           {/* Active view — fixed-height scroll region; keyed remount drives
