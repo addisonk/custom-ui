@@ -51,6 +51,8 @@ export interface SurveyDialogProps<TOutput extends FieldValues = FieldValues> {
   schema: z.ZodType<TOutput>;
   defaultValues: Partial<TOutput>;
   onComplete: (data: TOutput) => Promise<void>;
+  /** Merged onto `DialogContent` — use to override width/height per project. */
+  className?: string;
 }
 
 export function SurveyDialog<TOutput extends FieldValues>({
@@ -61,6 +63,7 @@ export function SurveyDialog<TOutput extends FieldValues>({
   schema,
   defaultValues,
   onComplete,
+  className,
 }: SurveyDialogProps<TOutput>) {
   const [step, setStep] = React.useState(0);
   const [direction, setDirection] = React.useState<"forward" | "back">(
@@ -140,80 +143,76 @@ export function SurveyDialog<TOutput extends FieldValues>({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         data-slot="survey-dialog"
-        className="flex h-dvh max-h-none w-full min-w-0 max-w-none flex-col gap-0 overflow-hidden rounded-none p-0 sm:h-auto sm:max-h-[80vh] sm:min-h-[480px] sm:min-w-[320px] sm:max-w-md"
+        className={cn("flex max-h-[85vh] flex-col sm:max-w-md", className)}
       >
-        {/* Progress bar - above header */}
-        <Progress value={progressValue} className="rounded-none" />
+        {/* Fixed header */}
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>
+            Step {step + 1} of {steps.length}: {currentStep.title}
+          </DialogDescription>
+        </DialogHeader>
 
-        <div className="flex min-h-0 flex-1 flex-col gap-4 p-6 pt-4">
-          {/* Fixed header */}
-          <DialogHeader className="shrink-0">
-            <DialogTitle>{title}</DialogTitle>
-            <DialogDescription>
-              Step {step + 1} of {steps.length}: {currentStep.title}
-            </DialogDescription>
-          </DialogHeader>
+        {/* Step progress */}
+        <Progress value={progressValue} />
 
-          {/* Scrollable content area */}
-          <FormProvider {...methods}>
-            <SurveyContext.Provider value={surveyContextValue}>
-              <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto">
-                <div
-                  key={step}
-                  className={cn(
-                    "motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200",
-                    direction === "forward"
-                      ? "motion-safe:slide-in-from-right-4"
-                      : "motion-safe:slide-in-from-left-4",
-                  )}
+        {/* Scrollable content area — full-bleed scrollbar, padded content */}
+        <FormProvider {...methods}>
+          <SurveyContext.Provider value={surveyContextValue}>
+            <div className="-mx-6 min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-6">
+              <div
+                key={step}
+                className={cn(
+                  "motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200",
+                  direction === "forward"
+                    ? "motion-safe:slide-in-from-right-4"
+                    : "motion-safe:slide-in-from-left-4",
+                )}
+              >
+                {currentStep.render()}
+              </div>
+            </div>
+          </SurveyContext.Provider>
+        </FormProvider>
+
+        {/* Error message */}
+        {error && <p className="text-destructive text-sm">{error}</p>}
+
+        {/* Fixed footer - hidden if step has hideFooter */}
+        {!currentStep.hideFooter && (
+          <DialogFooter className="flex-row justify-between sm:justify-between">
+            <div>
+              {!isFirst && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={goBack}
+                  disabled={isSubmitting}
                 >
-                  {currentStep.render()}
-                </div>
-              </div>
-            </SurveyContext.Provider>
-          </FormProvider>
-
-          {/* Error message - fixed */}
-          {error && (
-            <p className="text-destructive shrink-0 text-sm">{error}</p>
-          )}
-
-          {/* Fixed footer - hidden if step has hideFooter */}
-          {!currentStep.hideFooter && (
-            <DialogFooter className="flex shrink-0 flex-row justify-between">
-              <div>
-                {!isFirst && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={goBack}
-                    disabled={isSubmitting}
-                  >
-                    Back
-                  </Button>
-                )}
-              </div>
-              <div>
-                {isLast ? (
-                  <Button
-                    type="button"
-                    onClick={handleSubmit}
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting && (
-                      <Loader2Icon className="mr-2 size-4 animate-spin" />
-                    )}
-                    Submit
-                  </Button>
-                ) : (
-                  <Button type="button" onClick={handleNext}>
-                    Next
-                  </Button>
-                )}
-              </div>
-            </DialogFooter>
-          )}
-        </div>
+                  Back
+                </Button>
+              )}
+            </div>
+            <div>
+              {isLast ? (
+                <Button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting && (
+                    <Loader2Icon className="mr-2 size-4 animate-spin" />
+                  )}
+                  Submit
+                </Button>
+              ) : (
+                <Button type="button" onClick={handleNext}>
+                  Next
+                </Button>
+              )}
+            </div>
+          </DialogFooter>
+        )}
       </DialogContent>
     </Dialog>
   );
