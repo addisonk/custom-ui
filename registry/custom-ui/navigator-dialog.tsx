@@ -1,16 +1,18 @@
 "use client";
 
 import * as React from "react";
-import { ChevronLeftIcon } from "lucide-react";
+import { ChevronLeftIcon, XIcon } from "lucide-react";
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
 // Context lets drill-in views trigger navigation without prop-drilling.
@@ -110,12 +112,20 @@ export function NavigatorDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         data-slot="navigator-dialog"
-        className={cn("flex max-h-[85vh] flex-col sm:max-w-md", className)}
+        showCloseButton={false}
+        className={cn(
+          // Fixed height so the dialog never resizes between views —
+          // the header stays pinned and the content scrolls instead.
+          "flex h-[80svh] flex-col sm:h-[32rem] sm:max-w-md",
+          className,
+        )}
       >
         <NavigatorContext.Provider value={contextValue}>
-          {/* Header — back affordance appears only below the initial view */}
+          {/* Header — three zones: back (left) · title (centered) · close
+              (right). Back and close are absolutely positioned so the title
+              stays optically centered whether or not back is shown. */}
           <DialogHeader>
-            <div className="flex items-center gap-2">
+            <div className="relative flex h-10 items-center justify-center">
               {canGoBack && (
                 <Button
                   type="button"
@@ -123,24 +133,40 @@ export function NavigatorDialog({
                   size="icon"
                   onClick={back}
                   aria-label="Go back"
-                  className="-ml-2 size-7 shrink-0"
+                  className="absolute left-0 size-10 rounded-full motion-safe:animate-in motion-safe:fade-in"
                 >
-                  <ChevronLeftIcon />
+                  <ChevronLeftIcon className="size-5" />
                 </Button>
               )}
-              <DialogTitle>{activeView.title}</DialogTitle>
+              <DialogTitle className="text-balance px-10 text-center">
+                {activeView.title}
+              </DialogTitle>
+              <DialogClose asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Close"
+                  className="absolute right-0 size-10 rounded-full text-muted-foreground hover:text-foreground"
+                >
+                  <XIcon className="size-5" />
+                </Button>
+              </DialogClose>
             </div>
             {activeView.description && (
-              <DialogDescription>{activeView.description}</DialogDescription>
+              <DialogDescription className="text-center">
+                {activeView.description}
+              </DialogDescription>
             )}
           </DialogHeader>
 
-          {/* Active view — keyed remount drives the directional slide */}
-          <div className="-mx-6 min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-6">
+          {/* Active view — fixed-height scroll region; keyed remount drives
+              the directional slide */}
+          <ScrollArea className="-mx-6 min-h-0 flex-1">
             <div
               key={activeViewId}
               className={cn(
-                "motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200",
+                "px-6 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200",
                 direction === "forward"
                   ? "motion-safe:slide-in-from-right-4"
                   : "motion-safe:slide-in-from-left-4",
@@ -148,7 +174,7 @@ export function NavigatorDialog({
             >
               {activeView.render()}
             </div>
-          </div>
+          </ScrollArea>
         </NavigatorContext.Provider>
       </DialogContent>
     </Dialog>
