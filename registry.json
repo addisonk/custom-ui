@@ -17,6 +17,26 @@
           "target": "components/custom-ui/cell.tsx"
         }
       ]
+    },
+    {
+      "name": "survey-dialog",
+      "type": "registry:ui",
+      "title": "Survey Dialog",
+      "description": "A multi-step form dialog with forward/back navigation, per-step validation, and a progress bar.",
+      "dependencies": [
+        "react-hook-form",
+        "@hookform/resolvers",
+        "zod",
+        "lucide-react"
+      ],
+      "registryDependencies": ["dialog", "button", "progress"],
+      "files": [
+        {
+          "path": "registry/custom-ui/survey-dialog.tsx",
+          "type": "registry:ui",
+          "target": "components/custom-ui/survey-dialog.tsx"
+        }
+      ]
     }
   ]
 }
