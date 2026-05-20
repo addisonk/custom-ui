@@ -52,6 +52,27 @@
           "target": "components/custom-ui/navigator-dialog.tsx"
         }
       ]
+    },
+    {
+      "name": "settings-dialog",
+      "type": "registry:block",
+      "title": "Settings Dialog",
+      "description": "A drill-in settings dialog — a worked example composing NavigatorDialog with a Cell-based menu that navigates into editable sub-views.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "navigator-dialog",
+        "cell",
+        "button",
+        "input",
+        "label"
+      ],
+      "files": [
+        {
+          "path": "registry/custom-ui/settings-dialog.tsx",
+          "type": "registry:component",
+          "target": "components/custom-ui/settings-dialog.tsx"
+        }
+      ]
     }
   ]
 }
