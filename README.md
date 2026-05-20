@@ -82,8 +82,10 @@ navigation controls.
 An N-level drill-in dialog. Open a dialog, navigate _into_ sub-views to edit
 things, then go _back_ — an arbitrary-depth view stack inside a single Radix
 Dialog (real focus trap, `Esc`, scroll lock). Forward navigation slides in from
-the right, back navigation from the left. Where `SurveyDialog` is a _linear_
-multi-step form, `NavigatorDialog` is _non-linear_ drill-in navigation.
+the right, back navigation from the left. The dialog holds a **fixed height**
+so it never resizes between views — the header stays pinned and taller views
+scroll inside a `ScrollArea`. Where `SurveyDialog` is a _linear_ multi-step
+form, `NavigatorDialog` is _non-linear_ drill-in navigation.
 
 ```tsx
 import {

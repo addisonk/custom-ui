@@ -44,7 +44,7 @@
       "title": "Navigator Dialog",
       "description": "An N-level drill-in dialog — navigate into sub-views to edit things, then go back, with directional slide animations.",
       "dependencies": ["lucide-react"],
-      "registryDependencies": ["dialog", "button"],
+      "registryDependencies": ["dialog", "button", "scroll-area"],
       "files": [
         {
           "path": "registry/custom-ui/navigator-dialog.tsx",
