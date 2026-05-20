@@ -96,7 +96,13 @@ import {
 function MenuView() {
   const { navigate } = useNavigator();
   return (
-    <div className="flex flex-col gap-2">
+    // The view owns its body content — including any in-view heading and
+    // description. Only the screen title goes in the header bar.
+    <div className="flex flex-col gap-4">
+      <div>
+        <h2 className="text-2xl font-bold">Select an option</h2>
+        <p className="text-muted-foreground">Update the things you'd like.</p>
+      </div>
       <button onClick={() => navigate("edit-name")}>Edit name</button>
       <button onClick={() => navigate("edit-email")}>Edit email</button>
     </div>
@@ -114,6 +120,12 @@ function MenuView() {
   ]}
 />;
 ```
+
+Each view's `title` is its **screen title** — the short label shown centered
+in the header bar between the back and close buttons (and the dialog's
+accessible name). It is distinct from any heading or description the view
+renders inside its own body: the dialog owns the header chrome, the view owns
+everything below it.
 
 Views are declared as data and own their own state — the dialog owns only
 navigation. Any view drives it through the `useNavigator()` hook (`navigate`,
