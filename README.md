@@ -132,3 +132,30 @@ navigation. Any view drives it through the `useNavigator()` hook (`navigate`,
 `back`, `canGoBack`, `activeViewId`, `stack`). A Back button appears in the
 header automatically at depth; the dialog's close button always dismisses the
 whole dialog. The view stack resets to `initialView` on close.
+
+## Blocks
+
+### Settings Dialog
+
+A worked example that composes `NavigatorDialog` with `Cell` — a drill-in
+settings dialog: a `Cell`-based menu that navigates into editable sub-views.
+Installing it pulls `navigator-dialog` and `cell` with it. Copy it in and
+adapt the views to your own settings; the content is placeholder.
+
+```tsx
+import { SettingsDialog } from "@/components/custom-ui/settings-dialog";
+
+function Example() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Settings</Button>
+      <SettingsDialog open={open} onOpenChange={setOpen} />
+    </>
+  );
+}
+```
+
+`SettingsDialog` is the reference for using `Cell` as the row primitive inside
+a `NavigatorDialog` menu — each row is a `Cell` rendered `asChild` as a button
+that calls `navigate()`.
