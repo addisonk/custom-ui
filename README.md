@@ -127,6 +127,11 @@ do not resize or re-center the modal; the body scrolls when content is tall.
 Where `SurveyDialog` is a _linear_ multi-step form,
 `NavigatorDialog` is _non-linear_ drill-in navigation.
 
+The example below drills from Settings to Profile, then into Personal info, then
+into Display name before navigating back up the stack.
+
+![Navigator Dialog drilling through three nested settings views](media/navigator-dialog/navigator-dialog-stack.gif)
+
 ```tsx
 import {
   NavigatorDialog,
