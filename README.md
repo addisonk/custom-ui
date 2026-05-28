@@ -12,7 +12,8 @@ npx shadcn@latest add https://raw.githubusercontent.com/addisonk/custom-ui/main/
 
 ### Cell
 
-A composable list-cell component with start, content, and end slots.
+A composable list-cell component with start, content, and end slots. Variants
+follow the shadcn convention: `ghost` (default), `outline`, and `muted`.
 
 ```tsx
 import {
@@ -24,7 +25,7 @@ import {
   CellTitle,
 } from "@/components/custom-ui/cell";
 
-<Cell>
+<Cell variant="outline">
   <CellStart>
     <Avatar />
   </CellStart>
@@ -117,27 +118,26 @@ primary emphasis, and upcoming steps stay muted.
 An N-level drill-in dialog. Open a dialog, navigate _into_ sub-views to edit
 things, then go _back_ — an arbitrary-depth view stack inside a single Radix
 Dialog (real focus trap, `Esc`, scroll lock). Forward navigation slides in from
-the right, back navigation from the left. The dialog holds a **fixed height**
-so it never resizes between views — the header stays pinned and taller views
-scroll inside a `ScrollArea`. Where `SurveyDialog` is a _linear_ multi-step
-form, `NavigatorDialog` is _non-linear_ drill-in navigation.
+the right, back navigation from the left. It uses shadcn's `DialogContent`,
+`DialogTitle`, `DialogDescription`, and `DialogFooter`, but swaps the standard
+close button for a fixed 44px navigation bar with an absolutely centered view
+name and left/right actions. The standard shadcn `DialogHeader` still renders
+below that bar. The dialog shell keeps a stable default height so deeper views
+do not resize or re-center the modal; the body scrolls when content is tall.
+Where `SurveyDialog` is a _linear_ multi-step form,
+`NavigatorDialog` is _non-linear_ drill-in navigation.
 
 ```tsx
 import {
   NavigatorDialog,
   useNavigator,
 } from "@/components/custom-ui/navigator-dialog";
+import { Button } from "@/components/ui/button";
 
 function MenuView() {
   const { navigate } = useNavigator();
   return (
-    // The view owns its body content — including any in-view heading and
-    // description. Only the screen title goes in the header bar.
     <div className="flex flex-col gap-4">
-      <div>
-        <h2 className="text-2xl font-bold">Select an option</h2>
-        <p className="text-muted-foreground">Update the things you'd like.</p>
-      </div>
       <button onClick={() => navigate("edit-name")}>Edit name</button>
       <button onClick={() => navigate("edit-email")}>Edit email</button>
     </div>
@@ -149,24 +149,47 @@ function MenuView() {
   onOpenChange={setOpen}
   initialView="menu"
   views={[
-    { id: "menu", title: "Settings", render: () => <MenuView /> },
-    { id: "edit-name", title: "Edit name", render: () => <NameForm /> },
-    { id: "edit-email", title: "Edit email", render: () => <EmailForm /> },
+    {
+      id: "menu",
+      name: "Settings",
+      title: "Account",
+      description: "Update the things you'd like.",
+      render: () => <MenuView />,
+    },
+    {
+      id: "edit-name",
+      name: "Profile",
+      title: "Edit name",
+      render: () => <NameForm />,
+      footer: ({ back }) => (
+        <>
+          <Button variant="outline" onClick={back}>Cancel</Button>
+          <Button form="name-form" type="submit">Save</Button>
+        </>
+      ),
+    },
+    {
+      id: "edit-email",
+      name: "Email",
+      title: "Edit email",
+      render: () => <EmailForm />,
+    },
   ]}
 />;
 ```
 
-Each view's `title` is its **screen title** — the short label shown centered
-in the header bar between the back and close buttons (and the dialog's
-accessible name). It is distinct from any heading or description the view
-renders inside its own body: the dialog owns the header chrome, the view owns
-everything below it.
+Each view's `name` is its short navigation-bar label, centered in the fixed top
+bar. `title` and `description` render in the standard shadcn `DialogHeader`
+below that bar, using `DialogTitle` and `DialogDescription`. Views own the body
+content below the header, and can provide `footer` actions that render in a
+standard shadcn `DialogFooter`.
 
 Views are declared as data and own their own state — the dialog owns only
-navigation. Any view drives it through the `useNavigator()` hook (`navigate`,
-`back`, `canGoBack`, `activeViewId`, `stack`). A Back button appears in the
-header automatically at depth; the dialog's close button always dismisses the
-whole dialog. The view stack resets to `initialView` on close.
+navigation. Any view can drive navigation through render props or the
+`useNavigator()` hook (`navigate`, `back`, `canGoBack`, `activeViewId`,
+`stack`). A Back button appears in the navigation bar automatically at depth;
+the dialog's close button always dismisses the whole dialog. The view stack resets
+to `initialView` on close.
 
 ## Blocks
 

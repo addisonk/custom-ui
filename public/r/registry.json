@@ -8,7 +8,7 @@
       "type": "registry:ui",
       "title": "Cell",
       "description": "A composable list-cell component for building list items with start, content, and end slots.",
-      "dependencies": ["@radix-ui/react-slot"],
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority"],
       "registryDependencies": ["skeleton"],
       "files": [
         {
@@ -57,7 +57,7 @@
       "title": "Navigator Dialog",
       "description": "An N-level drill-in dialog — navigate into sub-views to edit things, then go back, with directional slide animations.",
       "dependencies": ["lucide-react"],
-      "registryDependencies": ["dialog", "button", "scroll-area"],
+      "registryDependencies": ["dialog", "button"],
       "files": [
         {
           "path": "registry/custom-ui/navigator-dialog.tsx",

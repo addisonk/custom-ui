@@ -1,19 +1,41 @@
 import { Slot } from "@radix-ui/react-slot";
 import type * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
+const cellVariants = cva(
+  "flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-[color,box-shadow,background-color,border-color] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  {
+    variants: {
+      variant: {
+        ghost: "border border-transparent bg-transparent hover:bg-accent hover:text-accent-foreground",
+        outline:
+          "border border-border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground",
+        muted:
+          "border border-transparent bg-muted text-foreground hover:bg-muted/80",
+      },
+    },
+    defaultVariants: {
+      variant: "ghost",
+    },
+  }
+);
+
 function Cell({
   className,
   asChild = false,
+  variant = "ghost",
   ...props
-}: React.ComponentProps<"div"> & { asChild?: boolean }) {
+}: React.ComponentProps<"div"> &
+  VariantProps<typeof cellVariants> & { asChild?: boolean }) {
   const Comp = asChild ? Slot : "div";
   return (
     <Comp
-      className={cn("flex w-full items-center gap-3", className)}
+      className={cn(cellVariants({ variant }), className)}
       data-slot="cell"
+      data-variant={variant}
       {...props}
     />
   );
@@ -116,4 +138,5 @@ export {
   CellNote,
   CellEnd,
   CellSkeleton,
+  cellVariants,
 };

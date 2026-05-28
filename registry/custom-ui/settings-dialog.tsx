@@ -68,17 +68,10 @@ const SETTINGS_ROWS: SettingsRow[] = [
 function MenuView() {
   const { navigate } = useNavigator();
   return (
-    <div className="flex flex-col gap-1">
-      <p className="text-muted-foreground pb-2 text-sm">
-        Manage your account and preferences.
-      </p>
+    <div className="flex flex-col gap-2">
       {SETTINGS_ROWS.map((row) => (
-        <Cell key={row.id} asChild>
-          <button
-            type="button"
-            onClick={() => navigate(row.id)}
-            className="hover:bg-accent rounded-lg px-2 py-2 text-left transition-colors"
-          >
+        <Cell key={row.id} asChild variant="outline">
+          <button type="button" onClick={() => navigate(row.id)}>
             <CellStart>
               <span className="bg-muted text-foreground flex size-9 items-center justify-center rounded-full [&_svg]:size-4">
                 {row.icon}
@@ -104,6 +97,7 @@ function EditNameView() {
   const { back } = useNavigator();
   return (
     <form
+      id="settings-display-name-form"
       className="flex flex-col gap-4"
       onSubmit={(event) => {
         event.preventDefault();
@@ -114,7 +108,6 @@ function EditNameView() {
         <Label htmlFor="settings-display-name">Display name</Label>
         <Input id="settings-display-name" defaultValue="Ada Lovelace" />
       </div>
-      <Button type="submit">Save</Button>
     </form>
   );
 }
@@ -135,10 +128,27 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
       onOpenChange={onOpenChange}
       initialView="menu"
       views={[
-        { id: "menu", title: "Settings", render: () => <MenuView /> },
-        { id: "edit-name", title: "Edit name", render: () => <EditNameView /> },
+        {
+          id: "menu",
+          name: "Settings",
+          title: "Account",
+          description: "Manage your account and preferences.",
+          render: () => <MenuView />,
+        },
+        {
+          id: "edit-name",
+          name: "Profile",
+          title: "Edit name",
+          render: () => <EditNameView />,
+          footer: () => (
+            <Button form="settings-display-name-form" type="submit">
+              Save
+            </Button>
+          ),
+        },
         {
           id: "notifications",
+          name: "Notifications",
           title: "Notifications",
           render: () => (
             <PlaceholderView text="Notification preferences would go here." />
@@ -146,6 +156,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
         },
         {
           id: "appearance",
+          name: "Appearance",
           title: "Appearance",
           render: () => (
             <PlaceholderView text="Appearance settings would go here." />
@@ -153,6 +164,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
         },
         {
           id: "advanced",
+          name: "Advanced",
           title: "Advanced",
           render: () => (
             <PlaceholderView text="Advanced and developer options would go here." />
