@@ -5,7 +5,7 @@ Personal collection of composable UI components built on [shadcn/ui](https://ui.
 ## Install
 
 ```bash
-npx shadcn add https://raw.githubusercontent.com/addisonk/custom-ui/main/registry.json
+npx shadcn@latest add https://raw.githubusercontent.com/addisonk/custom-ui/main/registry.json
 ```
 
 ## Components
@@ -76,6 +76,41 @@ Step components read the form via React Hook Form's `useFormContext()` and can
 drive navigation with the `useSurvey()` hook (`goToNextStep`, `goBack`,
 `direction`, `isFirst`). Set `hideFooter: true` on a step to render your own
 navigation controls.
+
+### Steps
+
+A segmented steps navigation component for showing where someone is in a
+multi-step process. It can derive complete/current/upcoming state from the
+current step, or accept explicit `status` values when the flow owns that state.
+
+```bash
+npx shadcn@latest add https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/steps.json
+```
+
+```tsx
+import { Steps } from "@/components/custom-ui/steps";
+
+const steps = [
+  { id: "basic-info", title: "Step 1", description: "Basic info and Selfie" },
+  { id: "photo-pack", title: "Step 2", description: "Photo pack selection" },
+  { id: "upload-photos", title: "Step 3", description: "Upload photos" },
+  { id: "review", title: "Step 4", description: "Review & submit" },
+];
+
+<Steps steps={steps} currentStep="photo-pack" />;
+```
+
+The completed, current, and upcoming states are intentionally distinct: past
+steps keep readable labels with a completed border, the current step takes the
+primary emphasis, and upcoming steps stay muted.
+
+![Animated segmented steps component moving through a four step training flow](media/steps/steps-progress.gif)
+
+![Segmented steps component with completed, current, and upcoming states](media/steps/steps-overview.png)
+
+![Compact steps component for a checkout flow](media/steps/steps-compact.png)
+
+![Clickable steps component with labels and descriptions](media/steps/steps-clickable.png)
 
 ### Navigator Dialog
 

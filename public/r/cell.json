@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cell",
+  "title": "Cell",
+  "description": "A composable list-cell component for building list items with start, content, and end slots.",
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
+  "registryDependencies": [
+    "skeleton"
+  ],
+  "files": [
+    {
+      "path": "registry/custom-ui/cell.tsx",
+      "content": "import { Slot } from \"@radix-ui/react-slot\";\nimport type * as React from \"react\";\n\nimport { Skeleton } from \"@/components/ui/skeleton\";\nimport { cn } from \"@/lib/utils\";\n\nfunction Cell({\n  className,\n  asChild = false,\n  ...props\n}: React.ComponentProps<\"div\"> & { asChild?: boolean }) {\n  const Comp = asChild ? Slot : \"div\";\n  return (\n    <Comp\n      className={cn(\"flex w-full items-center gap-3\", className)}\n      data-slot=\"cell\"\n      {...props}\n    />\n  );\n}\n\nfunction CellStart({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      className={cn(\"shrink-0\", className)}\n      data-slot=\"cell-start\"\n      {...props}\n    />\n  );\n}\n\nfunction CellContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      className={cn(\"flex min-w-0 flex-1 flex-col\", className)}\n      data-slot=\"cell-content\"\n      {...props}\n    />\n  );\n}\n\nfunction CellLabel({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      className={cn(\n        \"text-muted-foreground text-xs uppercase tracking-wide\",\n        className\n      )}\n      data-slot=\"cell-label\"\n      {...props}\n    />\n  );\n}\n\nfunction CellTitle({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      className={cn(\"truncate font-medium text-sm\", className)}\n      data-slot=\"cell-title\"\n      {...props}\n    />\n  );\n}\n\nfunction CellDescription({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      className={cn(\"truncate text-muted-foreground text-sm\", className)}\n      data-slot=\"cell-description\"\n      {...props}\n    />\n  );\n}\n\nfunction CellNote({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      className={cn(\"text-muted-foreground text-xs\", className)}\n      data-slot=\"cell-note\"\n      {...props}\n    />\n  );\n}\n\nfunction CellEnd({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      className={cn(\"shrink-0\", className)}\n      data-slot=\"cell-end\"\n      {...props}\n    />\n  );\n}\n\nfunction CellSkeleton({ className }: { className?: string }) {\n  return (\n    <Cell className={className}>\n      <CellStart>\n        <Skeleton className=\"size-10 rounded-full\" />\n      </CellStart>\n      <CellContent className=\"gap-1.5\">\n        <Skeleton className=\"h-3 w-2/3\" />\n        <Skeleton className=\"h-3 w-1/3\" />\n      </CellContent>\n    </Cell>\n  );\n}\n\nexport {\n  Cell,\n  CellStart,\n  CellContent,\n  CellLabel,\n  CellTitle,\n  CellDescription,\n  CellNote,\n  CellEnd,\n  CellSkeleton,\n};\n",
+      "type": "registry:ui",
+      "target": "components/custom-ui/cell.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}
