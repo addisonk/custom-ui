@@ -140,7 +140,7 @@ export function NavigatorDialog({
                 size="icon"
                 onClick={back}
                 aria-label="Go back"
-                className="absolute top-1/2 left-2 size-8 -translate-y-1/2 rounded-sm [&_svg]:size-4"
+                className="absolute top-1.5 left-2 size-8 rounded-sm [&_svg]:size-4"
               >
                 <ChevronLeftIcon />
               </Button>
@@ -154,7 +154,7 @@ export function NavigatorDialog({
                 variant="ghost"
                 size="icon"
                 aria-label="Close"
-                className="absolute top-1/2 right-2 size-8 -translate-y-1/2 rounded-sm text-muted-foreground hover:text-foreground [&_svg]:size-4"
+                className="absolute top-1.5 right-2 size-8 rounded-sm text-muted-foreground hover:text-foreground [&_svg]:size-4"
               >
                 <XIcon />
               </Button>
