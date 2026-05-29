@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stepper-states",
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/stepper.json"
+  ],
+  "files": [
+    {
+      "path": "registry/custom-ui/stepper-states.tsx",
+      "content": "import {\n  Stepper,\n  StepperIndicator,\n  StepperItem,\n} from \"@/components/custom-ui/stepper\";\n\nconst states = [\n  {\n    status: \"complete\" as const,\n    label: \"Complete\",\n    description: \"Step has been finished\",\n  },\n  {\n    status: \"current\" as const,\n    label: \"Current\",\n    description: \"Step is in progress\",\n  },\n  {\n    status: \"upcoming\" as const,\n    label: \"Upcoming\",\n    description: \"Step is not yet started\",\n  },\n];\n\nexport default function StepperStates() {\n  return (\n    <div className=\"grid gap-8 md:grid-cols-3\">\n      {states.map((state) => (\n        <div className=\"flex items-center gap-3\" key={state.status}>\n          <Stepper size=\"sm\">\n            <StepperItem status={state.status}>\n              <StepperIndicator />\n            </StepperItem>\n          </Stepper>\n          <div className=\"flex flex-col gap-0.5\">\n            <p className=\"text-sm font-semibold\">{state.label}</p>\n            <p className=\"text-muted-foreground text-xs\">\n              {state.description}\n            </p>\n          </div>\n        </div>\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ],
+  "type": "registry:example"
+}

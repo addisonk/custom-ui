@@ -52,6 +52,62 @@
       ]
     },
     {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "A composable vertical stepper component with animated indicators, separators, and size variants.",
+      "dependencies": ["lucide-react"],
+      "categories": ["navigation", "progress"],
+      "files": [
+        {
+          "path": "registry/custom-ui/stepper.tsx",
+          "type": "registry:ui",
+          "target": "components/custom-ui/stepper.tsx"
+        }
+      ]
+    },
+    {
+      "name": "stepper-demo",
+      "type": "registry:example",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/stepper.json",
+        "button"
+      ],
+      "files": [
+        {
+          "path": "registry/custom-ui/stepper-demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "stepper-minimal",
+      "type": "registry:example",
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/stepper.json"
+      ],
+      "files": [
+        {
+          "path": "registry/custom-ui/stepper-minimal.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
+      "name": "stepper-states",
+      "type": "registry:example",
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/stepper.json"
+      ],
+      "files": [
+        {
+          "path": "registry/custom-ui/stepper-states.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "navigator-dialog",
       "type": "registry:ui",
       "title": "Navigator Dialog",

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stepper-minimal",
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/stepper.json"
+  ],
+  "files": [
+    {
+      "path": "registry/custom-ui/stepper-minimal.tsx",
+      "content": "import {\n  Stepper,\n  StepperIndicator,\n  StepperItem,\n  StepperSeparator,\n  StepperTitle,\n} from \"@/components/custom-ui/stepper\";\n\nexport default function StepperMinimal() {\n  return (\n    <Stepper>\n      <StepperItem status=\"complete\">\n        <StepperIndicator />\n        <StepperTitle>Create account</StepperTitle>\n        <StepperSeparator />\n      </StepperItem>\n      <StepperItem status=\"complete\">\n        <StepperIndicator />\n        <StepperTitle>Connect workspace</StepperTitle>\n        <StepperSeparator />\n      </StepperItem>\n      <StepperItem status=\"current\">\n        <StepperIndicator />\n        <StepperTitle>Configure settings</StepperTitle>\n        <StepperSeparator />\n      </StepperItem>\n      <StepperItem status=\"upcoming\">\n        <StepperIndicator />\n        <StepperTitle>Invite team</StepperTitle>\n        <StepperSeparator />\n      </StepperItem>\n      <StepperItem status=\"upcoming\">\n        <StepperIndicator />\n        <StepperTitle>Start building</StepperTitle>\n        <StepperSeparator />\n      </StepperItem>\n    </Stepper>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ],
+  "type": "registry:example"
+}

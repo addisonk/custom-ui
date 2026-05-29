@@ -113,6 +113,66 @@ primary emphasis, and upcoming steps stay muted.
 
 ![Clickable steps component with labels and descriptions](media/steps/steps-clickable.png)
 
+### Stepper
+
+A composable, animated vertical stepper component. Use this when each step
+needs its own indicator, connector, title, and optional description. It is lower
+level than `Steps`: you compose the individual pieces, and your app owns the
+step state.
+
+```bash
+npx shadcn@latest add https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/stepper.json
+```
+
+```tsx
+import {
+  Stepper,
+  StepperContent,
+  StepperDescription,
+  StepperIndicator,
+  StepperItem,
+  StepperSeparator,
+  StepperTitle,
+} from "@/components/custom-ui/stepper";
+
+<Stepper>
+  <StepperItem status="complete">
+    <StepperIndicator />
+    <StepperContent>
+      <StepperTitle>Create account</StepperTitle>
+      <StepperDescription>Sign up with your email</StepperDescription>
+    </StepperContent>
+    <StepperSeparator />
+  </StepperItem>
+  <StepperItem status="current">
+    <StepperIndicator />
+    <StepperContent>
+      <StepperTitle>Configure settings</StepperTitle>
+      <StepperDescription>Set up your preferences</StepperDescription>
+    </StepperContent>
+    <StepperSeparator />
+  </StepperItem>
+  <StepperItem status="upcoming">
+    <StepperIndicator />
+    <StepperContent>
+      <StepperTitle>Start building</StepperTitle>
+      <StepperDescription>Create your first project</StepperDescription>
+    </StepperContent>
+  </StepperItem>
+</Stepper>
+```
+
+`Stepper` accepts `size="sm" | "default" | "lg"`. `StepperItem` accepts
+`status="complete" | "current" | "upcoming"`.
+
+![Animated vertical stepper progressing through five onboarding steps](media/stepper/stepper-progress.gif)
+
+![Vertical stepper showing completed, current, and upcoming onboarding steps](media/stepper/stepper-overview.png)
+
+![Title-only vertical stepper with completed, current, and upcoming steps](media/stepper/stepper-title-only.png)
+
+![Stepper status reference cards for complete, current, and upcoming states](media/stepper/stepper-states.png)
+
 ### Navigator Dialog
 
 An N-level drill-in dialog. Open a dialog, navigate _into_ sub-views to edit

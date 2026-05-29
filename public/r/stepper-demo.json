@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stepper-demo",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/stepper.json",
+    "button"
+  ],
+  "files": [
+    {
+      "path": "registry/custom-ui/stepper-demo.tsx",
+      "content": "\"use client\";\n\nimport { useState } from \"react\";\nimport { ArrowRightIcon, RotateCcwIcon } from \"lucide-react\";\n\nimport {\n  Stepper,\n  StepperContent,\n  StepperDescription,\n  StepperIndicator,\n  StepperItem,\n  StepperSeparator,\n  StepperTitle,\n} from \"@/components/custom-ui/stepper\";\nimport { Button } from \"@/components/ui/button\";\n\nconst steps = [\n  {\n    title: \"Create account\",\n    description: \"Sign up with your email and password\",\n  },\n  {\n    title: \"Connect workspace\",\n    description: \"Link your existing workspace or create a new one\",\n  },\n  {\n    title: \"Configure settings\",\n    description: \"Set up your preferences and notifications\",\n  },\n  {\n    title: \"Invite team\",\n    description: \"Add collaborators to your workspace\",\n  },\n  {\n    title: \"Start building\",\n    description: \"Create your first project and get started\",\n  },\n];\n\nfunction getStatus(\n  index: number,\n  currentStep: number,\n): \"complete\" | \"current\" | \"upcoming\" {\n  if (index < currentStep) return \"complete\";\n  if (index === currentStep) return \"current\";\n  return \"upcoming\";\n}\n\nexport default function StepperDemo() {\n  const [currentStep, setCurrentStep] = useState(0);\n  const isComplete = currentStep > steps.length - 1;\n\n  return (\n    <div className=\"flex flex-col gap-6\">\n      <Stepper>\n        {steps.map((step, index) => (\n          <StepperItem\n            key={step.title}\n            status={getStatus(index, currentStep)}\n          >\n            <StepperIndicator />\n            <StepperContent>\n              <StepperTitle>{step.title}</StepperTitle>\n              <StepperDescription>{step.description}</StepperDescription>\n            </StepperContent>\n            <StepperSeparator />\n          </StepperItem>\n        ))}\n      </Stepper>\n      <div className=\"flex items-center gap-2\">\n        <Button\n          disabled={currentStep === 0}\n          onClick={() => setCurrentStep(0)}\n          size=\"sm\"\n          variant=\"outline\"\n        >\n          <RotateCcwIcon />\n          Reset\n        </Button>\n        <Button\n          disabled={isComplete}\n          onClick={() => setCurrentStep((step) => step + 1)}\n          size=\"sm\"\n        >\n          Next step\n          <ArrowRightIcon />\n        </Button>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ],
+  "type": "registry:example"
+}
