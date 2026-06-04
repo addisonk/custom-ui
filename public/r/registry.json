@@ -108,6 +108,33 @@
       ]
     },
     {
+      "name": "logo-cloud",
+      "type": "registry:ui",
+      "title": "Logo Cloud",
+      "description": "An animated logo cloud that cycles through logo sets with staggered scale, opacity, and blur transitions.",
+      "categories": ["marketing", "logos"],
+      "files": [
+        {
+          "path": "registry/custom-ui/logo-cloud.tsx",
+          "type": "registry:ui",
+          "target": "components/custom-ui/logo-cloud.tsx"
+        }
+      ]
+    },
+    {
+      "name": "logo-cloud-demo",
+      "type": "registry:example",
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/logo-cloud.json"
+      ],
+      "files": [
+        {
+          "path": "registry/custom-ui/logo-cloud-demo.tsx",
+          "type": "registry:example"
+        }
+      ]
+    },
+    {
       "name": "navigator-dialog",
       "type": "registry:ui",
       "title": "Navigator Dialog",

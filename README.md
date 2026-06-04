@@ -173,6 +173,39 @@ import {
 
 ![Stepper status reference cards for complete, current, and upcoming states](media/stepper/stepper-states.png)
 
+### Logo Cloud
+
+An animated logo cloud that cycles through sets of logos with a staggered
+scale, opacity, and blur transition. It pauses on hover, respects
+`prefers-reduced-motion`, and receives every logo via props so it can be reused
+with image assets, JSX wordmarks, or text fallbacks.
+
+```bash
+npx shadcn@latest add https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/logo-cloud.json
+```
+
+```tsx
+import {
+  LogoCloud,
+  type LogoCloudItem,
+} from "@/components/custom-ui/logo-cloud";
+
+const logos: LogoCloudItem[] = [
+  { name: "Peloton", src: "/logos/peloton.svg" },
+  { name: "Sweetgreen", src: "/logos/sweetgreen.svg" },
+  { name: "Handshake", src: "/logos/handshake.svg" },
+  {
+    name: "Northstar",
+    logo: <span className="text-sm font-semibold">NORTHSTAR</span>,
+  },
+];
+
+<LogoCloud logos={logos} setSize={6} interval={4000} />;
+```
+
+Use `cellClassName`, `logoClassName`, and `gridClassName` to tune the visual
+treatment for a specific brand surface.
+
 ### Navigator Dialog
 
 An N-level drill-in dialog. Open a dialog, navigate _into_ sub-views to edit

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "logo-cloud-demo",
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/logo-cloud.json"
+  ],
+  "files": [
+    {
+      "path": "registry/custom-ui/logo-cloud-demo.tsx",
+      "content": "import type * as React from \"react\";\n\nimport {\n  LogoCloud,\n  type LogoCloudItem,\n} from \"@/components/custom-ui/logo-cloud\";\n\nconst logos: LogoCloudItem[] = [\n  { name: \"Northstar\", logo: <Wordmark>NORTHSTAR</Wordmark> },\n  { name: \"Mercury\", logo: <Wordmark>MERCURY</Wordmark> },\n  { name: \"Monarch\", logo: <Wordmark>Monarch</Wordmark> },\n  { name: \"Juniper\", logo: <Wordmark>JUNIPER</Wordmark> },\n  { name: \"Sable\", logo: <Wordmark>Sable</Wordmark> },\n  { name: \"Orchid\", logo: <Wordmark>ORCHID</Wordmark> },\n  { name: \"Atlas\", logo: <Wordmark>Atlas</Wordmark> },\n  { name: \"Kepler\", logo: <Wordmark>KEPLER</Wordmark> },\n  { name: \"Aster\", logo: <Wordmark>Aster</Wordmark> },\n  { name: \"Lumina\", logo: <Wordmark>LUMINA</Wordmark> },\n  { name: \"Cobalt\", logo: <Wordmark>Cobalt</Wordmark> },\n  { name: \"Nova\", logo: <Wordmark>NOVA</Wordmark> },\n];\n\nexport default function LogoCloudDemo() {\n  return <LogoCloud logos={logos} />;\n}\n\nfunction Wordmark({ children }: { children: React.ReactNode }) {\n  return (\n    <span className=\"text-muted-foreground text-sm font-semibold tracking-tight\">\n      {children}\n    </span>\n  );\n}\n",
+      "type": "registry:example"
+    }
+  ],
+  "type": "registry:example"
+}
