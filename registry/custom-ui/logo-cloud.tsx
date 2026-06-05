@@ -27,6 +27,10 @@ export interface LogoCloudProps
 
 const DEFAULT_SET_SIZE = 6;
 const DEFAULT_INTERVAL = 4000;
+const DURATION = 500;
+const STAGGER = 60;
+const EASE_SCALE_OUT = "cubic-bezier(0.55, 0, 0.85, 0.15)";
+const EASE_SCALE_IN = "cubic-bezier(0.15, 0.85, 0.35, 1)";
 
 function chunkLogos(logos: LogoCloudItem[], size: number) {
   if (logos.length <= size) return [logos];
@@ -73,7 +77,7 @@ function useInView<TElement extends Element>(
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsInView(Boolean(entry?.isIntersecting)),
-      { threshold: 0.25 },
+      { threshold: 0.3 },
     );
 
     observer.observe(element);
@@ -140,7 +144,7 @@ function LogoCloud({
     >
       <div
         className={cn(
-          "grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6 md:gap-6",
+          "grid grid-cols-3 gap-10 md:grid-cols-6",
           gridClassName,
         )}
         data-slot="logo-cloud-grid"
@@ -149,7 +153,7 @@ function LogoCloud({
         {Array.from({ length: normalizedSetSize }, (_, position) => (
           <div
             className={cn(
-              "relative flex h-20 items-center justify-center overflow-hidden px-6 sm:h-24",
+              "relative flex h-[60px] items-center justify-center overflow-hidden md:h-[80px]",
               cellClassName,
             )}
             data-slot="logo-cloud-cell"
@@ -190,14 +194,14 @@ function LogoCloudLogo({
   position: number;
   logoClassName?: string;
 }) {
-  const delay = `${position * 70}ms`;
+  const delay = isActive ? position * STAGGER + DURATION : position * STAGGER;
   const logo = item.logo ?? (
     <>
       {item.src ? (
         <img
           alt={item.alt ?? item.name}
           className={cn(
-            "max-h-9 w-auto max-w-[8rem] object-contain sm:max-h-10 sm:max-w-[9rem]",
+            "max-h-10 w-auto max-w-[110px] object-contain md:max-h-11 md:max-w-[125px]",
             logoClassName,
             item.className,
           )}
@@ -234,14 +238,20 @@ function LogoCloudLogo({
     <div
       aria-hidden={!isActive}
       className={cn(
-        "absolute inset-0 flex items-center justify-center px-6 transition-[opacity,transform,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[opacity,transform,filter]",
-        isActive
-          ? "scale-100 opacity-100 blur-none"
-          : "pointer-events-none scale-75 opacity-0 blur-sm",
+        "absolute inset-0 flex items-center justify-center will-change-[opacity,transform,filter]",
+        !isActive && "pointer-events-none",
       )}
       data-active={isActive}
       data-slot="logo-cloud-logo"
-      style={{ transitionDelay: delay }}
+      style={{
+        filter: isActive ? "blur(0px)" : "blur(4px)",
+        opacity: isActive ? 1 : 0,
+        transform: isActive ? "scale(1)" : "scale(0)",
+        transitionDelay: `${delay}ms`,
+        transitionDuration: `${DURATION}ms`,
+        transitionProperty: "opacity, transform, filter",
+        transitionTimingFunction: isActive ? EASE_SCALE_IN : EASE_SCALE_OUT,
+      }}
     >
       {content}
     </div>
