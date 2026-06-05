@@ -182,6 +182,8 @@ with image assets, JSX wordmarks, or text fallbacks.
 By default the logos render unframed; use `cellClassName` when a surface needs
 bordered or filled logo cells.
 
+![Animated monochrome logo cloud cycling between two sets of logos](media/logo-cloud/logo-cloud.gif)
+
 ```bash
 npx shadcn@latest add https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/logo-cloud.json
 ```
