@@ -179,6 +179,8 @@ An animated logo cloud that cycles through sets of logos with a staggered
 scale, opacity, and blur transition. It pauses on hover, respects
 `prefers-reduced-motion`, and receives every logo via props so it can be reused
 with image assets, JSX wordmarks, or text fallbacks.
+By default the logos render unframed; use `cellClassName` when a surface needs
+bordered or filled logo cells.
 
 ```bash
 npx shadcn@latest add https://raw.githubusercontent.com/addisonk/custom-ui/main/public/r/logo-cloud.json

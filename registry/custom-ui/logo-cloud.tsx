@@ -149,7 +149,7 @@ function LogoCloud({
         {Array.from({ length: normalizedSetSize }, (_, position) => (
           <div
             className={cn(
-              "relative flex h-20 items-center justify-center overflow-hidden rounded-md border bg-background/80 px-6 shadow-xs sm:h-24",
+              "relative flex h-20 items-center justify-center overflow-hidden px-6 sm:h-24",
               cellClassName,
             )}
             data-slot="logo-cloud-cell"
